@@ -7,23 +7,24 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Simultaneous Equation Cannons Calculator</h1>
-    <form id="monster-form">
-        <label for="hand_cards">Enter the number of cards in your hand:</label>
-        <input type="number" id="hand_cards" name="hand_cards" required>
-        <br>
-        <label for="field_cards">Enter the number of cards on the field (both players):</label>
-        <input type="number" id="field_cards" name="field_cards" required>
-        <br>
-        <label for="opponent_monster_level_rank">Enter the level or rank of the opponent's face-up monster:</label>
-        <input type="number" id="opponent_monster_level_rank" name="opponent_monster_level_rank" required>
-        <br>
-        <button type="submit">Calculate</button>
-    </form>
-    <div id="result"></div>
-    
-    <div style="margin-top: 20px;">
-        <button onclick="window.location.href='https://www.paypal.com/donate/?hosted_button_id=GFZSTP6Q394TY'">Donate</button>
+    <div class="container">
+        <h1>Simultaneous Equation Cannons Calculator</h1>
+        <form id="monster-form">
+            <label for="hand_cards">Enter the number of cards in your hand:</label>
+            <input type="number" id="hand_cards" name="hand_cards" required>
+            <br>
+            <label for="field_cards">Enter the number of cards on the field (both players):</label>
+            <input type="number" id="field_cards" name="field_cards" required>
+            <br>
+            <label for="opponent_monster_level_rank">Enter the level or rank of the opponent's face-up monster:</label>
+            <input type="number" id="opponent_monster_level_rank" name="opponent_monster_level_rank" required>
+            <br>
+            <button type="submit">Calculate</button>
+        </form>
+        <div id="result"></div>
+        <div class="donate-button">
+            <button onclick="window.location.href='https://www.paypal.com/donate/?hosted_button_id=GFZSTP6Q394TY'">Donate</button>
+        </div>
     </div>
 
     <script>

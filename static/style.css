@@ -10,8 +10,19 @@ body {
     height: 100vh;
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 h1 {
     color: #4CAF50;
+    margin-bottom: 20px;
 }
 
 form {
@@ -19,9 +30,9 @@ form {
     padding: 40px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
     width: 100%;
     box-sizing: border-box;
+    margin-bottom: 20px;
 }
 
 label {
@@ -63,6 +74,11 @@ button:hover {
     background: #fff;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.donate-button {
+    width: 100%;
 }
 
 p {
