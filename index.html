@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simultaneous Equation Cannons Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Simultaneous Equation Cannons Calculator</h1>
+    <form id="monster-form">
+        <label for="hand_cards">Enter the number of cards in your hand:</label>
+        <input type="number" id="hand_cards" name="hand_cards" required>
+        <br>
+        <label for="field_cards">Enter the number of cards on the field (both players):</label>
+        <input type="number" id="field_cards" name="field_cards" required>
+        <br>
+        <label for="opponent_monster_level_rank">Enter the level or rank of the opponent's face-up monster:</label>
+        <input type="number" id="opponent_monster_level_rank" name="opponent_monster_level_rank" required>
+        <br>
+        <button type="submit">Calculate</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('monster-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            fetch('/calculate', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `<p>${data.message}</p>`;
+                if (data.combinations) {
+                    data.combinations.forEach((combination, index) => {
+                        resultDiv.innerHTML += `<p>Combination ${index + 1}: Fusion Monster (Level ${combination[0]}), Xyz Monsters (Rank ${combination[1]} and Rank ${combination[2]})</p>`;
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
