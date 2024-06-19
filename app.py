@@ -1,5 +1,8 @@
+from flask import Flask, request, jsonify, render_template
+
+app = Flask(__name__)
+
 def calculate_required_monsters(total_cards):
-    # This function calculates possible Fusion and Xyz Monster levels/ranks that can be used
     possible_combinations = []
     for fusion_level in range(1, total_cards):
         remaining = total_cards - fusion_level
@@ -21,23 +24,29 @@ def find_matching_return_monsters(opponent_monster_level_rank, possible_combinat
                 return matching_combinations
     return matching_combinations
 
-# Get inputs from the user
-hand_cards = int(input("Enter the number of cards in your hand: "))
-field_cards = int(input("Enter the number of cards on the field (both players): "))
-opponent_monster_level_rank = int(input("Enter the level or rank of the opponent's face-up monster: "))
+@app.route('/')
+def home():
+    return render_template('index.html')
 
-total_cards = hand_cards + field_cards
+@app.route('/calculate', methods=['POST'])
+def calculate():
+    hand_cards = int(request.form['hand_cards'])
+    field_cards = int(request.form['field_cards'])
+    opponent_monster_level_rank = int(request.form['opponent_monster_level_rank'])
 
-# Calculate required monsters to banish all cards
-possible_combinations = calculate_required_monsters(total_cards)
+    total_cards = hand_cards + field_cards
+    possible_combinations = calculate_required_monsters(total_cards)
+    matching_combinations = find_matching_return_monsters(opponent_monster_level_rank, possible_combinations)
 
-# Check if there is a combination that allows the effect to be activated
-matching_combinations = find_matching_return_monsters(opponent_monster_level_rank, possible_combinations)
+    if matching_combinations:
+        return jsonify({
+            "message": "Effect can be activated!",
+            "combinations": matching_combinations
+        })
+    else:
+        return jsonify({
+            "message": "No valid combination of Fusion and Xyz Monsters found to activate the effect."
+        })
 
-if matching_combinations:
-    print("Effect can be activated!")
-    print(f"To banish all your opponent's cards, use one of the following combinations of monsters:")
-    for idx, (fusion_level, rank1, rank2) in enumerate(matching_combinations, start=1):
-        print(f"Combination {idx}: Fusion Monster (Level {fusion_level}), Xyz Monsters (Rank {rank1} and Rank {rank2})")
-else:
-    print("No valid combination of Fusion and Xyz Monsters found to activate the effect.")
+if __name__ == '__main__':
+    app.run(debug=True)
